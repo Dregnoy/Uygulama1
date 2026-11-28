@@ -72,11 +72,11 @@ def main() -> None:
     for src in sources:
         with Image.open(src) as img:
             rgb = img.convert("RGB")
-            tag, fn = rng.choice(transforms)
-            bad_img = fn(rgb, rng)
-            out_path = args.bad / f"{src.stem}_{tag}.jpg"
-            bad_img.save(out_path, quality=88)
-            created += 1
+            for tag, fn in rng.sample(transforms, k=2):
+                bad_img = fn(rgb, rng)
+                out_path = args.bad / f"{src.stem}_{tag}.jpg"
+                bad_img.save(out_path, quality=88)
+                created += 1
 
     print(f"Generated {created} bad samples in: {args.bad}")
 

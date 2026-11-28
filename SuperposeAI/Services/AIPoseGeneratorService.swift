@@ -134,11 +134,13 @@ struct AIPoseGeneratorService: PoseGenerating {
         }()
 
         let sceneSummary = sceneTags.isEmpty ? "general" : sceneTags.joined(separator: ", ")
+        let isEnglish = (Locale.preferredLanguages.first?.lowercased().hasPrefix("tr") == false)
+        let outputLang = isEnglish ? "English" : "Turkish"
 
         let prompt = """
         You are a professional photography pose coach. Output ONLY valid JSON (no markdown) matching this schema:
-        {"poses":[{"title":"string (Turkish, max 4 words)","angleLabel":"string (Turkish)","confidenceTag":"string (Turkish, max 2 words)","category":"Sokak|Kafe|Sahil|Portre|Çiftler","joints":{"nose":{"x":0.5,"y":0.2},"neck":{"x":0.5,"y":0.28},"leftShoulder":{"x":0.4,"y":0.32},"rightShoulder":{"x":0.6,"y":0.32},"leftElbow":{"x":0.36,"y":0.44},"rightElbow":{"x":0.64,"y":0.44},"leftWrist":{"x":0.41,"y":0.54},"rightWrist":{"x":0.59,"y":0.54},"root":{"x":0.5,"y":0.55},"leftHip":{"x":0.43,"y":0.56},"rightHip":{"x":0.57,"y":0.56},"leftKnee":{"x":0.42,"y":0.74},"rightKnee":{"x":0.58,"y":0.74},"leftAnkle":{"x":0.41,"y":0.9},"rightAnkle":{"x":0.59,"y":0.9}},"summary":"string (Turkish)","subjectTips":["string (Turkish)","string (Turkish)"],"photographerTips":["string (Turkish)","string (Turkish)"]}]}
-        Generate exactly 4 distinct, flattering pose variations in Turkish for:
+        {"poses":[{"title":"string (\(outputLang), max 4 words)","angleLabel":"string (\(outputLang))","confidenceTag":"string (\(outputLang), max 2 words)","category":"Sokak|Kafe|Sahil|Portre|Çiftler","joints":{"nose":{"x":0.5,"y":0.2},"neck":{"x":0.5,"y":0.28},"leftShoulder":{"x":0.4,"y":0.32},"rightShoulder":{"x":0.6,"y":0.32},"leftElbow":{"x":0.36,"y":0.44},"rightElbow":{"x":0.64,"y":0.44},"leftWrist":{"x":0.41,"y":0.54},"rightWrist":{"x":0.59,"y":0.54},"root":{"x":0.5,"y":0.55},"leftHip":{"x":0.43,"y":0.56},"rightHip":{"x":0.57,"y":0.56},"leftKnee":{"x":0.42,"y":0.74},"rightKnee":{"x":0.58,"y":0.74},"leftAnkle":{"x":0.41,"y":0.9},"rightAnkle":{"x":0.59,"y":0.9}},"summary":"string (\(outputLang))","subjectTips":["string (\(outputLang))","string (\(outputLang))"],"photographerTips":["string (\(outputLang))","string (\(outputLang))"]}]}
+        Generate exactly 4 distinct, flattering pose variations in \(outputLang) for:
         - UseCase: \(useCase.rawValue)
         - Lighting: \(lighting.message)
         - Anonymous scene tags: \(sceneSummary)

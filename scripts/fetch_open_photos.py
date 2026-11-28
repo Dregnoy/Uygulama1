@@ -22,6 +22,9 @@ CATEGORIES = [
     "Category:Featured_pictures_of_people",
     "Category:Quality_images_of_people",
     "Category:Portrait_photographs",
+    "Category:Featured_pictures_of_portraits",
+    "Category:Quality_images_of_women",
+    "Category:Quality_images_of_men",
 ]
 
 

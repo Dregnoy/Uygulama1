@@ -10,6 +10,11 @@ final class VoiceCoachService {
     @ObservationIgnored private var lastSpokenTime: CFAbsoluteTime = 0
     @ObservationIgnored private let cooldown: CFAbsoluteTime = 4.0
 
+    private var isEnglish: Bool {
+        guard let first = Locale.preferredLanguages.first?.lowercased() else { return false }
+        return !first.hasPrefix("tr")
+    }
+
     func announceIfNeeded(_ guidance: LiveGuidanceState, isEnabled: Bool, hasPinnedPose: Bool, fast: Bool = false) {
         guard isEnabled else { return }
 
@@ -18,10 +23,11 @@ final class VoiceCoachService {
 
         let message: String? = {
             if guidance.lighting == .tooDark {
-                return "Işık az, daha aydınlık bir yöne dön."
+                return isEnglish ? "Low light, face a brighter source." : "Işık az, daha aydınlık bir yöne dön."
             }
             if guidance.framing == .noSubject {
-                return hasPinnedPose ? "Kadraja girin, poz bekleniyor." : nil
+                if !hasPinnedPose { return nil }
+                return isEnglish ? "Step into the frame, pose ready." : "Kadraja girin, poz bekleniyor."
             }
             if guidance.framing != .great {
                 return localizedFraming(guidance.framing)
@@ -30,7 +36,7 @@ final class VoiceCoachService {
                 return faceHint
             }
             if hasPinnedPose, let score = guidance.poseMatchScore, score >= 85 {
-                return "Harika poz, sabit kal."
+                return isEnglish ? "Great pose, hold still." : "Harika poz, sabit kal."
             }
             return nil
         }()
@@ -44,7 +50,9 @@ final class VoiceCoachService {
     func speakCoaching(for pose: PoseIdea) {
         let subjectText = pose.coaching.subjectTips.joined(separator: ". ")
         let photoText = pose.coaching.photographerTips.joined(separator: ". ")
-        let fullText = "\(pose.title). Poz veren için: \(subjectText). Fotoğrafçı için: \(photoText)"
+        let fullText = isEnglish
+            ? "\(pose.title). For subject: \(subjectText). For photographer: \(photoText)"
+            : "\(pose.title). Poz veren için: \(subjectText). Fotoğrafçı için: \(photoText)"
         speak(fullText)
     }
 
@@ -55,7 +63,8 @@ final class VoiceCoachService {
         }
         let utterance = AVSpeechUtterance(string: text)
         utterance.rate = fast ? 0.56 : 0.50
-        utterance.voice = AVSpeechSynthesisVoice(language: "tr-TR") ?? AVSpeechSynthesisVoice()
+        let langCode = isEnglish ? "en-US" : "tr-TR"
+        utterance.voice = AVSpeechSynthesisVoice(language: langCode) ?? AVSpeechSynthesisVoice()
         synthesizer.speak(utterance)
         isSpeaking = true
     }
@@ -72,6 +81,17 @@ final class VoiceCoachService {
     }
 
     private func localizedFraming(_ framing: FramingStatus) -> String {
+        if isEnglish {
+            switch framing {
+            case .noSubject: return "Step into frame."
+            case .tooClose: return "Step back slightly."
+            case .tooFar: return "Step closer."
+            case .moveLeft: return "Move slightly left."
+            case .moveRight: return "Move slightly right."
+            case .tiltDown: return "Leave less headroom."
+            case .great: return "Great framing."
+            }
+        }
         switch framing {
         case .noSubject: return "Kadraja gir."
         case .tooClose: return "Biraz geri çekil."

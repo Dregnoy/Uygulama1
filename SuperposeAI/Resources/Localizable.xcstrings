@@ -170,7 +170,27 @@
       "localizations" : {
         "tr" : { "stringUnit" : { "state" : "translated", "value" : "4 Poz Önerin" } }
       }
-    }
+    },
+    "AI Poz" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "AI Pose" } } } },
+    "Araçlar" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Tools" } } } },
+    "Ayarlar" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } } } },
+    "Çevir" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Flip" } } } },
+    "Hayalet" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Ghost" } } } },
+    "Hazır Poz Şablonları" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Pose Templates" } } } },
+    "Kamera" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Camera" } } } },
+    "Kart" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Card" } } } },
+    "Kaydedildi!" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Saved!" } } } },
+    "Kaydet" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } } } },
+    "Kütüphane" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Library" } } } },
+    "Önce/Sonra" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Before/After" } } } },
+    "Paylaş" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Share" } } } },
+    "Saha Kalibrasyonu" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Field Calibration" } } } },
+    "Sanal Stüdyo Işığı (Özne Aydınlat)" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Virtual Studio Relight" } } } },
+    "Şablon" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Templates" } } } },
+    "Sihir" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Magic" } } } },
+    "Son" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Latest" } } } },
+    "Tek Dokunuşla Sihir" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "One-Tap Magic" } } } },
+    "Tekrar Çek" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Reshoot" } } } }
   },
   "version" : "1.0"
 }

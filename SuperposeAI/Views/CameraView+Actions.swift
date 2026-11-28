@@ -31,11 +31,13 @@ extension CameraView {
         do {
             let useTopShot = isBurstEnabled || (appState.pinnedPose != nil && !cameraService.isRAWEnabled && !cameraService.isHDRBracketingEnabled)
             if useTopShot {
+                let thermal = ProcessInfo.processInfo.thermalState
+                let frameCount = (visionService.isPowerSavingActive || thermal == .serious || thermal == .critical) ? 2 : 3
                 var burstFrames: [UIImage] = []
-                for idx in 0..<3 {
+                for idx in 0..<frameCount {
                     let frame = try await cameraService.capturePhoto()
                     burstFrames.append(frame)
-                    if idx < 2 {
+                    if idx < frameCount - 1 {
                         try? await Task.sleep(for: .milliseconds(140))
                     }
                 }

@@ -77,7 +77,8 @@ final class PoseVisionService {
         let shouldDetectPose = (targetPose != nil)
         let currentTick = analysisTick
         analysisTick &+= 1
-        let thermalStride = (ProcessInfo.processInfo.thermalState == .serious || ProcessInfo.processInfo.thermalState == .critical) ? 3 : 2
+        let thermal = ProcessInfo.processInfo.thermalState
+        let thermalStride = (thermal == .critical) ? 4 : ((thermal == .serious) ? 3 : 2)
         let runRect = (currentTick % thermalStride == 0)
         let runFace = (currentTick % thermalStride == 1) || (currentTick == 0)
         let prevGuidance = guidance
