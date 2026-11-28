@@ -29,16 +29,21 @@ final class SuperposeAIUITests: XCTestCase {
         }
         app.launch()
 
-        let libraryTab = app.buttons["Kütüphane"]
-        XCTAssertTrue(libraryTab.waitForExistence(timeout: 10))
+        let libraryTab = app.buttons["Library"].waitForExistence(timeout: 8)
+            ? app.buttons["Library"]
+            : app.buttons["Kütüphane"]
+        XCTAssertTrue(libraryTab.waitForExistence(timeout: 5))
         libraryTab.tap()
-        XCTAssertTrue(app.navigationBars["Kütüphane"].waitForExistence(timeout: 5))
+        XCTAssertTrue(
+            app.navigationBars["Library"].waitForExistence(timeout: 5)
+            || app.navigationBars["Kütüphane"].waitForExistence(timeout: 2)
+        )
 
-        let settingsTab = app.buttons["Ayarlar"]
+        let settingsTab = app.buttons["Settings"].exists ? app.buttons["Settings"] : app.buttons["Ayarlar"]
         XCTAssertTrue(settingsTab.waitForExistence(timeout: 5))
         settingsTab.tap()
 
-        let cameraTab = app.buttons["Kamera"]
+        let cameraTab = app.buttons["Camera"].exists ? app.buttons["Camera"] : app.buttons["Kamera"]
         XCTAssertTrue(cameraTab.waitForExistence(timeout: 5))
         cameraTab.tap()
     }
